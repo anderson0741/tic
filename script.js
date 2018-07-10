@@ -71,7 +71,7 @@ function Winner(who) {
 }
 
 function availableSquare() {
-    return tictac.filter(s => typeof s == "number");
+    return tictac.filter(a => typeof a == "number");
 }
 
 function compTurn() {

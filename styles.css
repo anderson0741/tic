@@ -13,6 +13,15 @@ body {
         justify-content: center;
         align-items: center;
     }
+    .title{
+        font-size: 100px;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        /* border: solid white 10px; */
+        color: white;
+        /* box-shadow: 3px 3px 3px 3px black; */
+        text-shadow: 13px 13px 13px black;
+        /* margin: 5px 15px; */
+    }
     .functionalDiv {
         display: none;
     }
@@ -26,7 +35,7 @@ body {
     }
     .tac {
         width: 700px;
-        height: 100vh;
+        height: 130vh;
         margin-top: -10px;
         margin-bottom: -15px;
         background-color: rgba(255, 255, 255, 0.7);
@@ -68,6 +77,9 @@ body {
         height: 55px;
         font-size: 35px;
         box-shadow: 11px 11px 11px black;
+    }
+    .bottomB{
+        margin-bottom: 25px;
     }
 }
 
@@ -189,15 +201,15 @@ body {
         display: none;
     }
     table {
-        height: 250px;
-        width: 250px;
+        /* height: 250px; */
+        /* width: 250px; */
     }
     td {
         border: solid black 3px;
         cursor: pointer;
     }
     .tac {
-        width: 360px;
+        width: 400px;
         height: 100vh;
         margin: auto;
         margin-top: 10px;
@@ -208,11 +220,11 @@ body {
         align-items: center;
     }
     .box {
-        height: 150px;
-        width: 150px;
+        height: 125px;
+        width: 125px;
         background-color: rgba(128, 128, 128, 0.4);
         text-align: center;
-        font-size: 75px;
+        font-size: 55px;
     }
     .text {
         font-size: 40px;
