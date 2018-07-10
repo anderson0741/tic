@@ -16,11 +16,8 @@ body {
     .title{
         font-size: 100px;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        /* border: solid white 10px; */
         color: white;
-        /* box-shadow: 3px 3px 3px 3px black; */
-        text-shadow: 13px 13px 13px black;
-        /* margin: 5px 15px; */
+        text-shadow: 13px 13px 13px rgba(0, 0, 0, 0.5);
     }
     .functionalDiv {
         display: none;
@@ -203,6 +200,12 @@ body {
     table {
         /* height: 250px; */
         /* width: 250px; */
+    }
+    .title{
+        font-size: 60px;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        color: white;
+        text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     }
     td {
         border: solid black 3px;

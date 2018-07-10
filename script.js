@@ -43,15 +43,15 @@ function turn(squareId, playerz) {
 
 function check(board, playerz) {
     let plays = board.reduce((a, e, i) =>
-        (e === player) ? a.concat(i) : a, []);
+        (e === playerz) ? a.concat(i) : a, []);
     let won = null;
     for (let [index, win] of winMoves.entries()) {
-        if (win.every(elem => plays.indexOf(elem) > -1)) {
+        if (win.every(k => plays.indexOf(k) > -1)) {
             won = { index: index, playerz: playerz };
             break;
         }
     }
-    return won
+    return won;
 }
 
 function gameOver(won) {
@@ -65,13 +65,13 @@ function gameOver(won) {
     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
 }
 
-function Winner(who) {
+function Winner(w) {
     document.querySelector('.finish').style.display = "block";
-    document.querySelector('.finish .text').innerText = who;
+    document.querySelector('.finish .text').innerText = w;
 }
 
 function availableSquare() {
-    return tictac.filter(a => typeof a == "number");
+    return tictac.filter(d => typeof d == "number");
 }
 
 function compTurn() {
@@ -81,7 +81,7 @@ function compTurn() {
 function tie() {
     if (availableSquare().length == 0) {
         for (let i = 0; i < boxes.length; i++) {
-            boxes[i].style.backgroundColor = 'purple';
+            boxes[i].style.display.backgroundColor = 'purple';
             boxes[i].removeEventListener('click', turnClick, false);
         }
         Winner("Tie Game")
