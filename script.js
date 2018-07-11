@@ -75,7 +75,7 @@ function availableSquare() {
 }
 
 function compTurn() {
-    return availableSquare()[0];
+    return availableSquare()[Math.floor(Math.random() * 8) +1];
 }
 
 function tie() {
