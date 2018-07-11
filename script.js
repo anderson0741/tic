@@ -78,11 +78,12 @@ function compTurn() {
     return availableSquare()[Math.floor(Math.random() * 8) +1];
 }
 
-function tie() {
+function tie(turnClick) {
     if (availableSquare().length == 0) {
         for (let i = 0; i < boxes.length; i++) {
             boxes[i].style.display.backgroundColor = 'purple';
             boxes[i].removeEventListener('click', turnClick, false);
+            break;
         }
         Winner("Tie Game")
         return true;
