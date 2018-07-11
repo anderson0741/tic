@@ -29,16 +29,18 @@ function startGame() {
 
 function funClick(square) {
     if (typeof tictac[square.target.id] == 'number') {
-        turn(square.target.id, player)
-        if (!tie()) turn(compTurn(), comp);
+        if (!turn(square.target.id, player)) {
+            if (!tie()) turn(compTurn(), comp);
+        } 
     }
 }
 
 function turn(squareId, playerz) {
     tictac[squareId] = playerz;
     document.getElementById(squareId).innerText = playerz;
-    let won = check(tictac, playerz)
-    if (won) gameOver(won)
+    let won = check(tictac, playerz);
+    if (won) gameOver(won);
+    return won;
 }
 
 function check(board, playerz) {
@@ -65,9 +67,9 @@ function gameOver(won) {
     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
 }
 
-function Winner(w) {
+function Winner(whoWon) {
     document.querySelector('.finish').style.display = "block";
-    document.querySelector('.finish .text').innerText = w;
+    document.querySelector('.finish .text').innerText = whoWon;
 }
 
 function availableSquare() {
@@ -75,16 +77,16 @@ function availableSquare() {
 }
 
 function compTurn() {
-    // return availableSquare()[Math.floor(Math.random() * 8) +1];
-    return availableSquare()[0];
+    let as = availableSquare();
+    return as[Math.floor(Math.random() * as.length)];
 }
 
-function tie(turnClick) {
+function tie() {
     if (availableSquare().length == 0) {
         for (let i = 0; i < boxes.length; i++) {
             boxes[i].style.display.backgroundColor = 'purple';
-            boxes[i].removeEventListener('click', turnClick, false);
-            break;
+            boxes[i].removeEventListener('click', funClick, false);
+            // break;
         }
         Winner("Tie Game")
         return true;

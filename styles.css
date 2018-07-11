@@ -81,6 +81,7 @@ body {
 }
 
 @media (max-width: 414px) {
+    /* All Nav bar stuff Copy and pasted in from a project */
     .functionalDiv {
         margin: -10px;
         padding: 0;
@@ -197,10 +198,7 @@ body {
     .hidden {
         display: none;
     }
-    table {
-        /* height: 250px; */
-        /* width: 250px; */
-    }
+    /* End of Nav */
     .title{
         font-size: 60px;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
