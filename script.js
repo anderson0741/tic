@@ -1,5 +1,5 @@
 const axios = require('axios');
-let server = require('../server');
+// let server = require('../server');
 
 let tictac;
 const player = "X";
@@ -41,7 +41,7 @@ function funClick(square) {
 }
 
 // axios.response.data 
-server.turn();
+server.compTurn();
 // function turn(squareId, playerz) {
 //     tictac[squareId] = playerz;
 //     document.getElementById(squareId).innerText = playerz;
@@ -63,17 +63,17 @@ function check(board, playerz) {
     return won;
 }
 
-server.gameOver();
-// function gameOver(won) {
-//     for (let index of winMoves[won.index]) {
-//         document.getElementById(index).style.backgroundColor =
-//             won.playerz == player ? "limegreen" : "red";
-//     }
-//     for (let i = 0; i < boxes.length; i++) {
-//         boxes[i].removeEventListener('click', funClick, false)
-//     }
-//     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
-// }
+// server.gameOver();
+function gameOver(won) {
+    for (let index of winMoves[won.index]) {
+        document.getElementById(index).style.backgroundColor =
+            won.playerz == player ? "limegreen" : "red";
+    }
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].removeEventListener('click', funClick, false)
+    }
+    Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
+}
 
 function Winner(whoWon) {
     document.querySelector('.finish').style.display = "block";
@@ -84,11 +84,11 @@ function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
-server.compTurn();
-// function compTurn() {
-//     let as = availableSquare();
-//     return as[Math.floor(Math.random() * as.length)];
-// }
+// server.compTurn();
+function compTurn() {
+    let as = availableSquare();
+    return as[Math.floor(Math.random() * as.length)];
+}
 
 function tie() {
     if (availableSquare().length == 0) {
