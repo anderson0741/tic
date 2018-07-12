@@ -1,3 +1,6 @@
+const axios = require('axios');
+let server = require('../server');
+
 let tictac;
 const player = "X";
 const comp = "O";
@@ -37,13 +40,15 @@ function funClick(square) {
     }
 }
 
-function turn(squareId, playerz) {
-    tictac[squareId] = playerz;
-    document.getElementById(squareId).innerText = playerz;
-    let won = check(tictac, playerz);
-    if (won) gameOver(won);
-    return won;
-}
+// axios.response.data 
+server.turn();
+// function turn(squareId, playerz) {
+//     tictac[squareId] = playerz;
+//     document.getElementById(squareId).innerText = playerz;
+//     let won = check(tictac, playerz);
+//     if (won) gameOver(won);
+//     return won;
+// }
 
 function check(board, playerz) {
     let plays = board.reduce((a, e, i) =>
@@ -58,16 +63,17 @@ function check(board, playerz) {
     return won;
 }
 
-function gameOver(won) {
-    for (let index of winMoves[won.index]) {
-        document.getElementById(index).style.backgroundColor =
-            won.playerz == player ? "limegreen" : "red";
-    }
-    for (let i = 0; i < boxes.length; i++) {
-        boxes[i].removeEventListener('click', funClick, false)
-    }
-    Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
-}
+server.gameOver();
+// function gameOver(won) {
+//     for (let index of winMoves[won.index]) {
+//         document.getElementById(index).style.backgroundColor =
+//             won.playerz == player ? "limegreen" : "red";
+//     }
+//     for (let i = 0; i < boxes.length; i++) {
+//         boxes[i].removeEventListener('click', funClick, false)
+//     }
+//     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
+// }
 
 function Winner(whoWon) {
     document.querySelector('.finish').style.display = "block";
@@ -78,10 +84,11 @@ function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
-function compTurn() {
-    let as = availableSquare();
-    return as[Math.floor(Math.random() * as.length)];
-}
+server.compTurn();
+// function compTurn() {
+//     let as = availableSquare();
+//     return as[Math.floor(Math.random() * as.length)];
+// }
 
 function tie() {
     if (availableSquare().length == 0) {
