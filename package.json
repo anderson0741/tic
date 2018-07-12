@@ -1,0 +1,33 @@
+{
+  "name": "tic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "http": "^0.0.0",
+    "jquery": "^3.3.1",
+    "mongoose": "^5.2.3",
+    "mongodb": "^3.1.1",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anderson0741/tic.git"
+  },
+  "proxy": "http://localhost:8080",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anderson0741/tic/issues"
+  },
+  "homepage": "https://github.com/anderson0741/tic#readme"
+}

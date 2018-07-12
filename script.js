@@ -1,11 +1,11 @@
-const axios = require('axios');
+// const axios = require('axios');
 // let server = require('../server');
 
 let tictac;
 const player = "X";
 const comp = "O";
 
-const toeUrl = '/toe/';
+// const server = require('https://localhost:8080');
 
 const winMoves = [
     [0, 1, 2],
@@ -41,7 +41,8 @@ function funClick(square) {
 }
 
 // axios.response.data 
-server.compTurn();
+
+server.turn();
 // function turn(squareId, playerz) {
 //     tictac[squareId] = playerz;
 //     document.getElementById(squareId).innerText = playerz;
