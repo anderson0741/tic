@@ -5,6 +5,12 @@ let tictac;
 const player = "X";
 const comp = "O";
 
+let socket = io.connect('http://localhost');
+socket.on('createGame', function (compTurn) {
+  console.log(compTurn);
+  socket.emit('my other event', { my: 'data' });
+});
+
 // const server = require('https://localhost:8080');
 
 const winMoves = [
@@ -42,14 +48,14 @@ function funClick(square) {
 
 // axios.response.data 
 
-server.turn();
-// function turn(squareId, playerz) {
-//     tictac[squareId] = playerz;
-//     document.getElementById(squareId).innerText = playerz;
-//     let won = check(tictac, playerz);
-//     if (won) gameOver(won);
-//     return won;
-// }
+// turn();
+function turn(squareId, playerz) {
+    tictac[squareId] = playerz;
+    document.getElementById(squareId).innerText = playerz;
+    let won = check(tictac, playerz);
+    if (won) gameOver(won);
+    return won;
+}
 
 function check(board, playerz) {
     let plays = board.reduce((a, e, i) =>
@@ -85,11 +91,11 @@ function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
-// server.compTurn();
-function compTurn() {
-    let as = availableSquare();
-    return as[Math.floor(Math.random() * as.length)];
-}
+compTurn();
+// function compTurn() {
+//     let as = availableSquare();
+//     return as[Math.floor(Math.random() * as.length)];
+// }
 
 function tie() {
     if (availableSquare().length == 0) {

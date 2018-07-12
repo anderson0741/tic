@@ -3,7 +3,7 @@ const app = express();
 const http = require('http');
 const axios = require('axios');
 const server = require('http').Server(app);
-const socket = require('socket.io')(server);
+const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 
 
@@ -19,8 +19,8 @@ app.post('/', (req, res) => {
     })
 });
 
-socket.on('connection', function(socketFF){
-    socketFF.on('createGame', function(tyrb){
+io.on('connection', function(socket){
+    socket.on('createGame', function(compTurn){
         let as = availableSquare();
         return as[Math.floor(Math.random() * as.length)];
     })
