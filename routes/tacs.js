@@ -5,8 +5,8 @@ const Tacs = require('../models/tacs');
 app2.get('/', (req, res) => {
     Tacs.find({}, (err, appz) => {
         if (err) return res.status(500).send(err);
-        return res.send(appz);
-        // return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');;
+        // return res.send(appz);
+        return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');;
     })
 });
 app2.post('/', (req, res) => {

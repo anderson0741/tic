@@ -1,12 +1,12 @@
 
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const app = express();
-const http = require('http');
-const axios = require('axios');
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const bodyParser = require('body-parser');
+// const http = require('http');
+// const axios = require('axios');
+// const server = require('http').Server(app);
+// const io = require('socket.io')(server);
+// const bodyParser = require('body-parser');
 
 const player = "X";
 const comp = "O";
@@ -48,7 +48,7 @@ function funClick(square) {
 
 function turn(squareId, playerz) {
     tictac[squareId] = playerz;
-    document.getElementById(squareId).innerText = playerz;
+    // document.getElementById(squareId).innerText = playerz;
     let won = check(tictac, playerz);
     if (won) gameOver(won);
     return won;
@@ -68,21 +68,21 @@ function check(board, playerz) {
 }
 
 // server.gameOver();
-function gameOver(won) {
-    for (let index of winMoves[won.index]) {
-        document.getElementById(index).style.backgroundColor =
-            won.playerz == player ? "limegreen" : "red";
-    }
-    for (let i = 0; i < boxes.length; i++) {
-        boxes[i].removeEventListener('click', funClick, false)
-    }
-    Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
-}
+// function gameOver(won) {
+//     for (let index of winMoves[won.index]) {
+//         document.getElementById(index).style.backgroundColor =
+//             won.playerz == player ? "limegreen" : "red";
+//     }
+//     for (let i = 0; i < boxes.length; i++) {
+//         boxes[i].removeEventListener('click', funClick, false)
+//     }
+//     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
+// }
 
-function Winner(whoWon) {
-    document.querySelector('.finish').style.display = "block";
-    document.querySelector('.finish .text').innerText = whoWon;
-}
+// function Winner(whoWon) {
+//     document.querySelector('.finish').style.display = "block";
+//     document.querySelector('.finish .text').innerText = whoWon;
+// }
 
 function availableSquare() {
     return tictac.filter(d => typeof d == "number");
@@ -95,10 +95,10 @@ function compTurn() {
 
 function tie() {
     if (availableSquare().length == 0) {
-        for (let i = 0; i < boxes.length; i++) {
-            boxes[i].style.display.backgroundColor = 'purple';
-            boxes[i].removeEventListener('click', funClick, false);
-        }
+        // for (let i = 0; i < boxes.length; i++) {
+        //     boxes[i].style.display.backgroundColor = 'purple';
+        //     boxes[i].removeEventListener('click', funClick, false);
+        // }
         Winner("Tie Game")
         return true;
     }
@@ -106,13 +106,10 @@ function tie() {
 }
 
 
-app.get('/', (req, res) => {
-    Tacs.find({}, (err, appz) => {
-        if (err) return res.status(500).send(err);
+app.get('/', function(req, res){
         // return res.send(appz);
-        return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');;
-    })
-});
+        return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/client/index.html');;
+    });
 app.post('/', (req, res) => {
     turn(req.body, function(){
         res.send({
