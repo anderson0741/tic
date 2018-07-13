@@ -1,17 +1,13 @@
-// const axios = require('axios');
-// let server = require('../server');
+const express = require('express');
+const app = express();
+const http = require('http');
+const axios = require('axios');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const bodyParser = require('body-parser');
 
-let tictac;
 const player = "X";
 const comp = "O";
-
-let socket = io.connect('http://localhost');
-socket.on('createGame', function (compTurn) {
-  console.log(compTurn);
-  socket.emit('my other event', { my: 'data' });
-});
-
-// const server = require('https://localhost:8080');
 
 const winMoves = [
     [0, 1, 2],
@@ -24,9 +20,7 @@ const winMoves = [
     [6, 4, 2]
 ]
 
-const boxes = document.querySelectorAll('.box');
-
-startGame();
+// const boxes = document.querySelectorAll('.box');
 
 function startGame() {
     document.querySelector('.finish').style.display = "none"
@@ -42,13 +36,10 @@ function funClick(square) {
     if (typeof tictac[square.target.id] == 'number') {
         if (!turn(square.target.id, player)) {
             if (!tie()) turn(compTurn(), comp);
-        } 
+        }
     }
 }
 
-// axios.response.data 
-
-// turn();
 function turn(squareId, playerz) {
     tictac[squareId] = playerz;
     document.getElementById(squareId).innerText = playerz;
@@ -91,11 +82,10 @@ function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
-compTurn();
-// function compTurn() {
-//     let as = availableSquare();
-//     return as[Math.floor(Math.random() * as.length)];
-// }
+function compTurn() {
+    let as = availableSquare();
+    return as[Math.floor(Math.random() * as.length)];
+}
 
 function tie() {
     if (availableSquare().length == 0) {
@@ -108,3 +98,21 @@ function tie() {
     }
     return false;
 }
+
+app.get('/', (req, res) => {
+    res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');
+});
+
+app.post('/', (req, res) => {
+    const turn = new turn(req.body);
+    tictac.save((err) => {
+        if (err) return res.status(500).send(err);
+        // let as = availableSquare();
+        // return as[Math.floor(Math.random() * as.length)];
+        res.send({board: "tictac", Winner: "Winner"})
+    })
+});
+
+app.listen(8080, () => {
+    console.log("Server is running on port 8080");
+}) 
