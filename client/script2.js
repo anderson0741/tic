@@ -4,16 +4,28 @@
     let $boxes = $('.box')
 
     const tacsUrl = '/tacs/';
-    const player = "X";
-    const comp = "O";
+    // const player = "X";
+    // const comp = "O";
+
 
     $(function () {
 
         $.ajax({
             type: 'GET',
+            // url: '/tacs/',
+            url: 'tacsUrl',
+            success: function(boxes){
+                $.each(boxes, function(i, boxes){
+                    $boxes.append(funClick)
+                })
+                // console.log('success', winMoves)
+            },
+            error: function(){
+                alert(winMoves);
+            },
             tictac: 'tictac',
-            // player: 'player',
-            // comp: 'comp',
+            player: 'player',
+            comp: 'comp',
             winMoves: 'winMoves',
             startGame: 'startGame',
             funClick: 'funClick',
@@ -27,28 +39,5 @@
         });
 
     });
-    let winMoves = tacsUrl.winMoves;
-    let startGame = tacsUrl.startGame;
-    let funClick = tacsUrl.funClick;
-    let turn = tacsUrl.turn;
-    let check = tacsUrl.check;
-    let gameOver = tacsUrl.gameOver;
-    let Winner = tacsUrl.Winner;
-    let availableSquare = tacsUrl.availableSquare;
-    let compTurn = tacsUrl.compTurn;
-    let tie = tacsUrl.tie;
 
-    
-    console.log(winMoves);
-    console.log(startGame);
-    funClick();
-    turn();
-    check();
-    gameOver();
-    Winner();
-    availableSquare();
-    compTurn();
-    tie();
-
-    // module.exports = [];
 })(window, jQuery, undefined);

@@ -8,8 +8,12 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 
-// const player = "X";
-// const comp = "O";
+const player = "X";
+const comp = "O";
+
+let tictac = [0,0,0,0,0,0,0,0,0];
+let winner = null;
+let winningMove = null;
 
 const winMoves = [
     [0, 1, 2],
@@ -23,13 +27,15 @@ const winMoves = [
 ]
 
 function startGame() {
-    document.querySelector('.finish').style.display = "none"
+    // document.querySelector('.finish').style.display = "none"
     tictac = Array.from(Array(9).keys());
-    for (let i = 0; i < boxes.length; i++) {
-        boxes[i].innerText = '';
-        boxes[i].style.removeProperty('background-color');
-        boxes[i].addEventListener('click', funClick, false);
-    }
+    winner = null;
+    winningMove = null;
+    // for (let i = 0; i < boxes.length; i++) {
+        // boxes[i].innerText = '';
+        // boxes[i].style.removeProperty('background-color');
+        // boxes[i].addEventListener('click', funClick, false);
+    // }
 }
 
 function funClick(square) {
@@ -100,13 +106,22 @@ function tie() {
 }
 
 
-mongoose.connect("mongodb://localhost/tacs", (err) => {
-    if (err) throw err;
-    console.log("Connected to the Tac Database");
+app.get('/', (req, res) => {
+    Tacs.find({}, (err, appz) => {
+        if (err) return res.status(500).send(err);
+        // return res.send(appz);
+        return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');;
+    })
 });
-
-app.use(bodyParser.json());
-app.use('/tacs', require('./routes/tacs'));
+app.post('/', (req, res) => {
+    turn(req.body, function(){
+        res.send({
+            gameBoard: tictac,
+            winner: winner,
+            winningMove: winningMove
+        })
+    });
+});
 
 
 app.listen(8080, () => {

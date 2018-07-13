@@ -10,28 +10,21 @@ app2.get('/', (req, res) => {
     })
 });
 app2.post('/', (req, res) => {
-    const turn = new turn(req.body);
-    tictac.save((err) => {
-        if (err) return res.status(500).send(err);
-        // let as = availableSquare();
-        // return as[Math.floor(Math.random() * as.length)];
+    turn(req.body, function(){
         res.send({
-            tictac: 'tictac',
-            // player: 'player',
-            // comp: 'comp',
-            winMoves: 'winMoves',
-            startGame: 'startGame',
-            funClick: 'funClick',
-            turn: 'turn',
-            check: 'check',
-            gameOver: 'gameOver',
-            Winner: "Winner",
-            availableSquare: 'availableSquare',
-            compTurn: 'compTurn',
-            tie: 'tie'
+            gameBoard: tictac,
+            winner: winner,
+            winningMove: winningMove
         })
-    })
+    });
 });
+// app2.post('/', (req, res) => {
+//     const newTacs = new Tacs(req.body);
+//     newTacs.save((err) => {
+//         if (err) return res.status(500).send(err);
+//         return res.send(newTacs);
+//     })
+// });
 app2.get('/:id', (req, res) => {
     Tacs.findById(req.params.id, (err, tacs) => {
         if (err) return res.status(500).send(err);
