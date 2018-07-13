@@ -1,29 +1,42 @@
-// (function (window, $, undefined) {
+(function (window, $, undefined) {
     let server = "localhost:8080"
     let tictac;
-    // import player from '';
-    import winMoves from '../server2';
+    let $boxes = $('.box')
 
-    console.log(server.player);
-    // let $boxes = $('.box')
+    const player = "X";
+    const comp = "O";
 
-    // $(function (){
+    $(function () {
 
-    //     $.ajax({
-    //         type: 'GET',
-    //         board: 'tictac',
-    //         Winner: "Winner",
-    //         index: 'index',
-    //         startGame: function(response) {
-    //             if(startGame !== null) {
-    //                 onSuccess(resonse);
-    //             }
-    //         },
+        $.ajax({
+            type: 'GET',
+            tictac: 'tictac',
+            // player: 'player',
+            // comp: 'comp',
+            winMoves: 'winMoves',
+            startGame: 'startGame',
+            funClick: 'funClick',
+            turn: 'turn',
+            check: 'check',
+            gameOver: 'gameOver',
+            Winner: "Winner",
+            availableSquare: 'availableSquare',
+            compTurn: 'compTurn',
+            tie: 'tie'
+        })
+    })
 
-    //     })
-    // })
 
+    winMoves();
     startGame();
+    funClick();
+    turn();
+    check();
+    gameOver();
+    Winner();
+    availableSquare();
+    compTurn();
+    tie();
 
-    
-// })(window, jQuery, undefined);
+    module.exports = [];
+})(window, jQuery, undefined);

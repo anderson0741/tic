@@ -1,4 +1,7 @@
+// import { log } from '../../../../Library/Caches/typescript/2.6/node_modules/@types/async';
+
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const http = require('http');
 const axios = require('axios');
@@ -6,8 +9,8 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 
-const player = "X";
-const comp = "O";
+// const player = "X";
+// const comp = "O";
 
 const winMoves = [
     [0, 1, 2],
@@ -19,8 +22,6 @@ const winMoves = [
     [0, 4, 8],
     [6, 4, 2]
 ]
-
-// const boxes = document.querySelectorAll('.box');
 
 function startGame() {
     document.querySelector('.finish').style.display = "none"
@@ -99,20 +100,42 @@ function tie() {
     return false;
 }
 
-app.get('/', (req, res) => {
-    res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');
+
+mongoose.connect("mongodb://localhost/tacs", (err) => {
+    if (err) throw err;
+    console.log("Connected to the Tac Database");
 });
 
-app.post('/', (req, res) => {
-    const turn = new turn(req.body);
-    tictac.save((err) => {
-        if (err) return res.status(500).send(err);
-        // let as = availableSquare();
-        // return as[Math.floor(Math.random() * as.length)];
-        res.send({board: "tictac", Winner: "Winner"})
-    })
-});
+app.use(bodyParser.json());
+app.use('/tacs', require('./routes/tacs'));
 
+// app.get('/', (req, res) => {
+//     res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');
+// });
+
+// app.post('/', (req, res) => {
+//     const turn = new turn(req.body);
+//     tictac.save((err) => {
+//         if (err) return res.status(500).send(err);
+//         // let as = availableSquare();
+//         // return as[Math.floor(Math.random() * as.length)];
+//         res.send({
+//             tictac: 'tictac',
+//             // player: 'player',
+//             // comp: 'comp',
+//             winMoves: 'winMoves',
+//             startGame: 'startGame',
+//             funClick: 'funClick',
+//             turn: 'turn',
+//             check: 'check',
+//             gameOver: 'gameOver',
+//             Winner: "Winner",
+//             availableSquare: 'availableSquare',
+//             compTurn: 'compTurn',
+//             tie: 'tie'
+//         })
+//     })
+// });
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 }) 
