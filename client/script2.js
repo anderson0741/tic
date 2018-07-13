@@ -3,6 +3,7 @@
     let tictac;
     let $boxes = $('.box')
 
+    const tacsUrl = '/tacs/';
     const player = "X";
     const comp = "O";
 

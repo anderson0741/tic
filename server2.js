@@ -109,33 +109,7 @@ mongoose.connect("mongodb://localhost/tacs", (err) => {
 app.use(bodyParser.json());
 app.use('/tacs', require('./routes/tacs'));
 
-// app.get('/', (req, res) => {
-//     res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/index.html');
-// });
 
-// app.post('/', (req, res) => {
-//     const turn = new turn(req.body);
-//     tictac.save((err) => {
-//         if (err) return res.status(500).send(err);
-//         // let as = availableSquare();
-//         // return as[Math.floor(Math.random() * as.length)];
-//         res.send({
-//             tictac: 'tictac',
-//             // player: 'player',
-//             // comp: 'comp',
-//             winMoves: 'winMoves',
-//             startGame: 'startGame',
-//             funClick: 'funClick',
-//             turn: 'turn',
-//             check: 'check',
-//             gameOver: 'gameOver',
-//             Winner: "Winner",
-//             availableSquare: 'availableSquare',
-//             compTurn: 'compTurn',
-//             tie: 'tie'
-//         })
-//     })
-// });
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 }) 
