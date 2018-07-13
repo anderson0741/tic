@@ -3,15 +3,15 @@ const Shema = mongoose.Schema;
 
 const tacSchema = new mongoose.Schema({
     "tictac": String,
-    "winMoves": String,
+    "winMoves": Number,
     "startGame": Number,
     "funClick": String,
-    "turn": Boolean,
+    "turn": String,
     check: String,
     gameOver: String,
     Winner: String,
     availableSquare: Number,
-    compTurn: String,
+    compTurn: Number,
     tie: String
 });
 

@@ -15,14 +15,14 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    // "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "proxy": "http://localhost:8080",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anderson0741/tic.git"
   },
-  "proxy": "http://localhost:8080",
   "keywords": [],
   "author": "",
   "license": "ISC",
