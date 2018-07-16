@@ -1,19 +1,22 @@
 
 const express = require('express');
+// const cors = require('cors')
 // const mongoose = require('mongoose');
 const app = express();
 // const http = require('http');
 // const axios = require('axios');
 // const server = require('http').Server(app);
 // const io = require('socket.io')(server);
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const player = "X";
 const comp = "O";
 
-let tictac = [0,0,0,0,0,0,0,0,0];
-let winner = null;
-let winningMove = null;
+var tictac = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+var winner = null;
+var winningMove = null;
+// let gameBoard = tictac;
+
 
 const winMoves = [
     [0, 1, 2],
@@ -27,15 +30,9 @@ const winMoves = [
 ]
 
 function startGame() {
-    // document.querySelector('.finish').style.display = "none"
     tictac = Array.from(Array(9).keys());
     winner = null;
     winningMove = null;
-    // for (let i = 0; i < boxes.length; i++) {
-        // boxes[i].innerText = '';
-        // boxes[i].style.removeProperty('background-color');
-        // boxes[i].addEventListener('click', funClick, false);
-    // }
 }
 
 function funClick(square) {
@@ -46,78 +43,76 @@ function funClick(square) {
     }
 }
 
-function turn(squareId, playerz) {
-    tictac[squareId] = playerz;
-    // document.getElementById(squareId).innerText = playerz;
-    let won = check(tictac, playerz);
-    if (won) gameOver(won);
-    return won;
+function turn(turnInfo, callBack) {
+    // gameBoard[turnInfo.squarechosen] = "X";
+    tictac[turnInfo] = player;
+    check(function () {
+        if (winner != null) return callBack();
+        compTurn(callBack);
+    })
 }
 
-function check(board, playerz) {
-    let plays = board.reduce((a, e, i) =>
-        (e === playerz) ? a.concat(i) : a, []);
-    let won = null;
-    for (let [index, win] of winMoves.entries()) {
-        if (win.every(k => plays.indexOf(k) > -1)) {
-            won = { index: index, playerz: playerz };
-            break;
-        }
-    }
-    return won;
+function check(callBack) {
+    // To do,implement check
+    // if (playerWon) {
+    //     winner = "player";
+    //     winningMove = winMoves();
+    // } else if (compWon) {
+    //     winner = "comp"
+    //     winningMove = winMoves();
+    // } else if (tie) {
+    //     winner = "tie"
+    // }
+    callBack();
 }
-
-// server.gameOver();
-// function gameOver(won) {
-//     for (let index of winMoves[won.index]) {
-//         document.getElementById(index).style.backgroundColor =
-//             won.playerz == player ? "limegreen" : "red";
-//     }
-//     for (let i = 0; i < boxes.length; i++) {
-//         boxes[i].removeEventListener('click', funClick, false)
-//     }
-//     Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
-// }
-
-// function Winner(whoWon) {
-//     document.querySelector('.finish').style.display = "block";
-//     document.querySelector('.finish .text').innerText = whoWon;
-// }
 
 function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
-function compTurn() {
-    let as = availableSquare();
-    return as[Math.floor(Math.random() * as.length)];
+function compTurn(callBack) {
+    // let turnTaken = false;
+    // while (!turnTaken) {
+    //     let num = Math.floor[Math.random() * 8];
+    //     if (tictac[num] === 0) {
+    //         tictac[num] = comp;
+    //         turnTaken = true;
+    //     }
+    // }
+    var as = availableSquare();
+    tictac[as[Math.floor(Math.random() * as.length)]] = comp;
+    check(callBack);
 }
 
 function tie() {
     if (availableSquare().length == 0) {
-        // for (let i = 0; i < boxes.length; i++) {
-        //     boxes[i].style.display.backgroundColor = 'purple';
-        //     boxes[i].removeEventListener('click', funClick, false);
-        // }
         Winner("Tie Game")
         return true;
     }
     return false;
 }
 
+// Do I need this?
 
-app.get('/', function(req, res){
-        // return res.send(appz);
-        return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/client/index.html');;
-    });
-app.post('/', (req, res) => {
-    turn(req.body, function(){
+app.use(bodyParser.json());
+app.get('/', function (req, res) {
+    return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/client/index.html');
+});
+
+app.get('/:path', function (req, res) {
+    return res.sendFile('/Users/lawrenceanderson/Desktop/dev/game/tic/client/' + req.params.path);
+});
+
+app.post('/turn', (req, res) => {
+    const playerMove = req.body.playerMove;
+    turn(playerMove, function () {
         res.send({
             gameBoard: tictac,
             winner: winner,
             winningMove: winningMove
         })
     });
+    // res.send({test: "test"});
 });
 
 

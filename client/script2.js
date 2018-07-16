@@ -7,27 +7,66 @@
     // const comp = "O";
 
 
-    $(function () {
+    $('.box').click(function (event) {
 
+        let $boxes = $('.box')
+
+        // $.post("127.0.0.1:8080", {
+        //     data: {
+        //         'playermove': event.target.id
+        //      },
+        //      success: drawboard(),
+        //      error: function (err) {
+        //          console.log("lol")
+        //      }
+        //     },
+        //     function(data){
+        //         console.log(data)
+        //     },
+
+        // )
+        let data = JSON.stringify({playerMove: event.target.id});
         $.ajax({
-            type: 'POST',
-            url: 127.0.0.1: 8080,
-            data: {
-                'playermove': e.target.id
-            }
+            type: 'post',
+            url: '/turn',
+            contentType: 'application/json',
+            data,
+            // success: function(boxes) {
+            //     $.each(boxes, function(i, drawboard) {
+            //         $boxes.append(gameBoard)
+            //     })
+            // }
             success: drawboard,
-            failure: function (err) {
+            // success: function (result) {
+            //     console.log(result)
+            // },
+            error: function (err) {
+                console.log(err)
                 console.log("Server Error")
+                console.log(event.target.id)
             }
         });
     });
+
+    function drawboard(response) {
+        console.log(response)
+        for (i = 0; i < response.tictac.length; i++) {
+            if (response.tictac[i] == "X") {
+
+                console.log("hello")
+            } if (response.tictac[i] == "O") {
+                return { gameBoard: tictac }
+            }
+        }
+    }
+
     function startGame() {
         document.querySelector('.finish').style.display = "none"
         // tictac = Array.from(Array(9).keys());
         for (let i = 0; i < boxes.length; i++) {
-        boxes[i].innerText = '';
-        boxes[i].style.removeProperty('background-color');
-        boxes[i].addEventListener('click', funClick, false);
+            boxes[i].innerText = '';
+            boxes[i].style.removeProperty('background-color');
+            boxes[i].addEventListener('click', funClick, false);
         }
     }
     function turn(squareId, playerz) {
