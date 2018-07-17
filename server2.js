@@ -12,11 +12,11 @@ const bodyParser = require('body-parser');
 const player = "X";
 const comp = "O";
 
+var whoseTurn = "player";  // Will change between "player" and "computer"
 var tictac = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 var winner = null;
-var winningMove = null;
+// var winningMove = null;
 // let gameBoard = tictac;
-
 
 const winMoves = [
     [0, 1, 2],
@@ -47,22 +47,24 @@ function turn(turnInfo, callBack) {
     // gameBoard[turnInfo.squarechosen] = "X";
     tictac[turnInfo] = player;
     check(function () {
-        if (winner != null) return callBack();
+        if (winner !== null) return callBack();
         compTurn(callBack);
     })
 }
 
-// function winner
-
-function check(squareId, callBack) {
+function check(callBack) {
     // To do,implement check
-    let winner = check(tictac, callBack)
-    if (player) {
+    // check the current tictac board for a winning combo
+        // if there is a winning combo:
+            // change a global var to say who won (`winner`)
+            // Execute the callback (`callback()`) which will pass along
+            // who the winner was (global variable)
+    if (player) {  // Is always truthy right now
         winner = "player";
-        winningMove = winMoves();
+        winningMove = winMoves;
     } else if (comp) {
         winner = "comp"
-        winningMove = winMoves();
+        winningMove = winMoves;
     } else if (tie) {
         winner = "tie"
     }
@@ -107,12 +109,14 @@ app.get('/:path', function (req, res) {
 });
 
 app.post('/turn', (req, res) => {
+    whoseTurn = "player"
     const playerMove = req.body.playerMove;
-    turn(playerMove, function () {
+
+    turn(playerMove, function() {
         res.send({
             gameBoard: tictac,
             winner: winner,
-            winningMove: winningMove
+            // winningMove: winningMove
         })
     });
     // res.send({test: "test"});

@@ -62,15 +62,22 @@
 
     function startGame() {
         document.querySelector('.finish').style.display = "none"
-        // tictac = Array.from(Array(9).keys());
+        tictac = Array.from(Array(9).keys());
         for (let i = 0; i < boxes.length; i++) {
             boxes[i].innerText = '';
             boxes[i].style.removeProperty('background-color');
             boxes[i].addEventListener('click', funClick, false);
         }
     }
+    function funClick(square) {
+        if (typeof tictac[square.target.id] == 'number') {
+            if (!turn(square.target.id, player)) {
+                if (!tie()) turn(compTurn(), comp);
+            }
+        }
+    }
     function turn(squareId, playerz) {
-        // tictac[squareId] = playerz;
+        tictac[squareId] = playerz;
         document.getElementById(squareId).innerText = playerz;
         // let won = check(tictac, playerz);
         // if (won) gameOver(won);
@@ -90,6 +97,19 @@
     function Winner(whoWon) {
         document.querySelector('.finish').style.display = "block";
         document.querySelector('.finish .text').innerText = whoWon;
+    }
+    function compTurn(callBack) {
+        // let turnTaken = false;
+        // while (!turnTaken) {
+        //     let num = Math.floor[Math.random() * 8];
+        //     if (tictac[num] === 0) {
+        //         tictac[num] = comp;
+        //         turnTaken = true;
+        //     }
+        // }
+        var as = availableSquare();
+        tictac[as[Math.floor(Math.random() * as.length)]] = comp;
+        check(callBack);
     }
     function tie() {
         if (availableSquare().length == 0) {
