@@ -52,17 +52,20 @@ function turn(turnInfo, callBack) {
     })
 }
 
-function check(callBack) {
+// function winner
+
+function check(squareId, callBack) {
     // To do,implement check
-    // if (playerWon) {
-    //     winner = "player";
-    //     winningMove = winMoves();
-    // } else if (compWon) {
-    //     winner = "comp"
-    //     winningMove = winMoves();
-    // } else if (tie) {
-    //     winner = "tie"
-    // }
+    let winner = check(tictac, callBack)
+    if (player) {
+        winner = "player";
+        winningMove = winMoves();
+    } else if (comp) {
+        winner = "comp"
+        winningMove = winMoves();
+    } else if (tie) {
+        winner = "tie"
+    }
     callBack();
 }
 
