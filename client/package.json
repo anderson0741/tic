@@ -2,7 +2,7 @@
   "name": "tic",
   "version": "1.0.0",
   "description": "",
-  "main": "script2.js",
+  "main": "main.js",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
