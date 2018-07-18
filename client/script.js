@@ -53,6 +53,7 @@
                 console.log(event.target.id)
             }
         });
+        
         /*
         * I set up a form in order to send the GET command to reset the tictac board on the server side.
         * e.preventDefault prevents the button from reloading the page.
@@ -74,6 +75,7 @@
     * I console logged it to see the response from the server, which shows what the tictac board has changed for the computer and the players move.
     * The for loop will itterate through the response, it will set the players move on the client board, and display it with the text X or O.
     * The next if statement is to check for a tie, if it gets a response that is the string 'tie' it will call the tie function, and then call gameOver to end the game.
+    * @param response, will be the response from the server.
     */
     function drawboard(response) {
         console.log(response)
@@ -114,6 +116,7 @@
     * This will end the game and remove the click functionality.
     * The for loop will set the background color of the winning move to limegreen if the player wins, or red if the computer wins.
     * Then it will shut off the click function, and change the .finish div to display who won.
+    * @param won and @param winningMove will be which player won, and which moves gave them the win respectively.
     */
     function gameOver(won, winningMove) {
         for (let index of winningMove) {
@@ -127,6 +130,7 @@
     /* 
     * pull from the document the finish class, and set the display to block.
     * then it will change the innerText of the box to say who the winner was, whether it was the computer or the player.
+    * @param whoWon will show the winner(computer or player)
     */
     function Winner(whoWon) {
         document.querySelector('.finish').style.display = "block";
