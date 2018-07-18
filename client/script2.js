@@ -1,148 +1,93 @@
 (function (window, $, undefined) {
-    // let server = "localhost:8080"
     let tictac;
     let $boxes = $('.box')
-
     const player = "X";
     const comp = "O";
+    const winMoves = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [6, 4, 2]
+    ]
 
-   $("#reset").click(startGame);
+    $("#reset").click(startGame);
+    $boxes.click(clicker);
+    function clicker(event) {
 
-
-    $('.box').click(function (event) {
-
-        let $boxes = $('.box')
-
-        // $.post("127.0.0.1:8080", {
-        //     data: {
-        //         'playermove': event.target.id
-        //      },
-        //      success: drawboard(),
-        //      error: function (err) {
-        //          console.log("lol")
-        //      }
-        //     },
-        //     function(data){
-        //         console.log(data)
-        //     },
-
-        // )
-        let data = JSON.stringify({playerMove: event.target.id});
+        let data = JSON.stringify({ playerMove: event.target.id });
         $.ajax({
             type: 'post',
             url: '/turn',
             contentType: 'application/json',
-            data,
+            data: data,
             success: drawboard,
-            // success: function (result) {
-            //     console.log(result)
-            // },
             error: function (err) {
                 console.log(err)
                 console.log("Server Error")
                 console.log(event.target.id)
             }
         });
-    });
+        $("form").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/reset",
+                type: "GET",
+                success: function (responseData) { },
+                error: console.error
+            });
+        });
+    };
 
     function drawboard(response) {
         console.log(response)
         for (i = 0; i < response.tictac.length; i++) {
-            if (response.tictac[i] === player) {
-                console.log(response.tictac[i] + "Player")
-                // console.log($boxes[i].innerText)
+            if (response.tictac[i] == player) {
                 $boxes[i].innerText = player;
-                // console.log("hello")
-            } else if (response.tictac[i] === comp) {
-                console.log('Comp')
-                
-                console.log(response.tictac[i] + "Computer")
-                // console.log($boxes[i].innerText)
-            //  (response.tictac[i] == comp) {
+            } else if (response.tictac[i] == comp) {
                 $boxes[i].innerText = comp;
-                // return { tictac: tictac }
-            } else {
-                console.log(response.tictac[i] + "Else")
-                // console.log($boxes[i].innerText)
-                console.log("else")
-                // check()
             }
-            // break;
+        }
+        if (response.winner !== null) {
+            if (response.winner === 'tie') {
+                return tie()
+            }
+            gameOver(response.winner, response.winningMove)
         }
     }
-    // function funClick(square) {
-    //     if (typeof tictac[square] == 'number') {
-    //         if (!turn(square, player)) {
-    //             if (!tie()) turn(compTurn(), comp);
-    //         }
-    //     }
-    // }
-    
+
 
     function startGame() {
-        // document.querySelector('.finish').style.display = "none"
+        $boxes.off()
+        $boxes.click(clicker);
         document.querySelector('.finish').style.display = "none"
         tictac = Array.from(Array(9).keys());
         for (let i = 0; i < $boxes.length; i++) {
             $boxes[i].innerText = '';
             $boxes[i].style.removeProperty('background-color');
-            $boxes[i].addEventListener('click', funClick, false);
         }
     }
 
-   
-    function funClick(square, tictac) {
-        if (typeof tictac[square.target.id] == 'number') {
-            if (!turn(square.target.id, player)) {
-                if (!tie()) turn(compTurn(), comp);
-            }
+    function gameOver(won, winningMove) {
+        for (let index of winningMove) {
+            document.getElementById(index).style.backgroundColor =
+                won == player ? "limegreen" : "red";
         }
-    }
-    function turn(squareId, playerz) {
-        tictac[squareId] = playerz;
-        $('#squareId').innerText = playerz;
-        let won = check(tictac, playerz);
-        if (won) gameOver(won);
-        return won;
-    }
-    function gameOver(won) {
-        for (let index of winMoves[won.index]) {
-            // document.getElementById(index).style.backgroundColor =
-            $('#index').style.backgroundColor =
-                won.playerz == player ? "limegreen" : "red";
-        }
-        for (let i = 0; i < boxes.length; i++) {
-            $boxes[i].removeEventListener('click', funClick, false)
-        }
-        Winner(won.playerz == player ? "YOU WIN!" : "Loser...")
+        $boxes.off()
+        Winner(won == player ? "YOU WIN!" : "Loser...")
     }
 
     function Winner(whoWon) {
         document.querySelector('.finish').style.display = "block";
         document.querySelector('.finish .text').innerText = whoWon;
     }
-    function compTurn(callBack) {
-        // let turnTaken = false;
-        // while (!turnTaken) {
-        //     let num = Math.floor[Math.random() * 8];
-        //     if (tictac[num] === 0) {
-        //         tictac[num] = comp;
-        //         turnTaken = true;
-        //     }
-        // }
-        var as = availableSquare();
-        tictac[as[Math.floor(Math.random() * as.length)]] = comp;
-    }
+
     function tie() {
-        if (availableSquare().length == 0) {
-            for (let i = 0; i < boxes.length; i++) {
-                boxes[i].style.display.backgroundColor = 'purple';
-                boxes[i].removeEventListener('click', funClick, false);
-            }
-            Winner("Tie Game")
-            return true;
-        }
-        return false;
+        $boxes.off();
+        Winner("Tie Game");
     }
 
 })(window, jQuery, undefined);
