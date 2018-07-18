@@ -14,6 +14,7 @@ const comp = "O";
 
 var whoseTurn = "player";  // Will change between "player" and "computer"
 var tictac = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+// var tictac = ['', '', '', '', '', '', '', '', ''];
 var winner = null;
 // var winningMove = null;
 // let gameBoard = tictac;
@@ -28,6 +29,7 @@ const winMoves = [
     [0, 4, 8],
     [6, 4, 2]
 ]
+startGame();
 
 function startGame() {
     tictac = Array.from(Array(9).keys());
@@ -35,12 +37,17 @@ function startGame() {
     winningMove = null;
 }
 
+
 function funClick(square) {
     if (typeof tictac[square] == 'number') {
         if (!turn(square, player)) {
             if (!tie()) turn(compTurn(), comp);
+            
         }
     }
+    // if (typeof tictac[square] == 'number' && !turn(square, player) && !tie() && turn(compTurn(), comp)){
+
+    // }
 }
 
 function turn(turnInfo, callBack) {
@@ -100,7 +107,7 @@ function compTurn(/*callBack*/) {
 
 function tie() {
     if (availableSquare().length == 0) {
-        Winner("Tie Game")
+        // winner("Tie Game")
         return true;
     }
     return false;
