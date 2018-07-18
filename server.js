@@ -3,11 +3,14 @@ const app = express();
 const bodyParser = require('body-parser');
 
 /**
-* Define what the players characters will be in the tictac board, that will be sent to the client
+* Define what the players characters will be in the tictac board.
 */
 const player = "X";
 const comp = "O";
 
+/**
+ * This is the servers version of the tictac board.
+ */
 var tictac = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 /**
@@ -31,7 +34,7 @@ const winMoves = [
 ]
 
 /**
-* startGame function clears prior data, and sets it back to the begginning before anything has been set.  It is linked to the reset button
+* startGame function clears prior data, and sets it back to the begginning before anything was set.  It is linked to the reset button in the HTML.
 */
 function startGame() {
     tictac = Array.from(Array(9).keys());
@@ -51,7 +54,7 @@ function funClick(square) {
 }
 
 /**
-* check determines whether a given player has won based on the gameboard(tictac)
+* check determines whether a given player has won based on the gameboard(tictac).
 * If there is a winner here it will change the null property to true, and set the winningMove to how they won.
 * @param playerz - Which player to check (comp, player) 
 */
@@ -70,17 +73,17 @@ function check(playerz) {
 }
 
 /**
- * This will filter through the boxes, and return which boxes are still available.
+ * This will filter through the boxes, and return which boxes are still available on the tictac board.
  */
 function availableSquare() {
     return tictac.filter(d => typeof d == "number");
 }
 
 /**
-* this will determine where the computer will go
-* it will call into the available squares function and set it equal to as
-* it will take the board, then check the as, choose a random number out of whats left from the as, and change it on the tictac board to an "O", which is what comp is equal to.
-* then check if it won
+* This will determine where the computer will go
+* It will call into the available squares function and set it equal to 'as'.
+* Then it will take the board, check the 'as', choose a random number out of whats left from the 'as', and change it on the tictac board to an "O", which is what comp is equal to.
+* then check if it won.
 */
 function compTurn() {
     var as = availableSquare();
@@ -111,7 +114,7 @@ app.get('/', function (req, res) {
 });
 
 /**
-* This will get the reset command to set the tictac board back to the beggining
+* This will get the reset command to set the tictac board back to the begining.
 */
 app.get("/reset", function (req, res) {
     startGame()
