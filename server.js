@@ -103,6 +103,8 @@ function tie() {
 
 const path = require("path")
 
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/turn")  
+
 app.use(express.static(path.join(__dirname, "client", "build")))
 /**
 * This is to use bodyParser, which is middleware, and extracts the body portion of an incoming request stream, then exposes it with req.body.
