@@ -101,6 +101,9 @@ function tie() {
     return false;
 }
 
+const path = require("path")
+
+app.use(express.static(path.join(__dirname, "client", "build")))
 /**
 * This is to use bodyParser, which is middleware, and extracts the body portion of an incoming request stream, then exposes it with req.body.
 */
@@ -159,6 +162,10 @@ app.post('/turn', (req, res) => {
         winner: null,
         tictac: tictac
     })
+});
+
+app.get("*", (req, res) => {  
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 /**
