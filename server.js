@@ -103,7 +103,7 @@ function tie() {
 
 const path = require("path")
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/turn")  
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:8080")  
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 /**
