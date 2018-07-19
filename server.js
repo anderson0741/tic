@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+require("dotenv").config(); 
 
 /**
 * Define what the players characters will be in the tictac board.
