@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-require("dotenv").config(); 
 
 /**
 * Define what the players characters will be in the tictac board.
@@ -102,11 +101,6 @@ function tie() {
     return false;
 }
 
-const path = require("path")
-
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:8080")  
-
-app.use(express.static(path.join(__dirname, "client", "build")))
 /**
 * This is to use bodyParser, which is middleware, and extracts the body portion of an incoming request stream, then exposes it with req.body.
 */
@@ -165,10 +159,6 @@ app.post('/turn', (req, res) => {
         winner: null,
         tictac: tictac
     })
-});
-
-app.get("*", (req, res) => {  
-    res.sendFile(path.join(__dirname, "client", "build", "/Users/lawrenceanderson/Desktop/dev/game/tic/client/index.html"));
 });
 
 /**
